@@ -1,0 +1,83 @@
+.history-table {
+  width: 80%;
+  margin-left: 10%;
+  overflow-x: auto;
+}
+
+.history-table__header,
+.history-table__row {
+  display: grid;
+  align-items: stretch;
+}
+
+/* История по группам */
+.history-table__header--group,
+.history-table__row--group {
+  grid-template-columns:
+    minmax(180px, 1.1fr)
+    minmax(120px, 0.8fr)
+    minmax(180px, 1.2fr)
+    minmax(220px, 1.5fr);
+}
+
+/* История по студентам */
+.history-table__header--student,
+.history-table__row--student {
+  grid-template-columns:
+    minmax(180px, 1.3fr)  /* Студент */
+    minmax(120px, 0.75fr) /* Дата */
+    minmax(110px, 0.7fr)  /* Тип */
+    minmax(150px, 0.95fr) /* Статус */
+    minmax(80px, 0.45fr)  /* Объём */
+    minmax(100px, 0.6fr)  /* Формат */
+    minmax(170px, 1.2fr)  /* Тема */
+    minmax(190px, 1.3fr); /* Примечание */
+}
+
+.history-table__col,
+.history-table__cell {
+  padding: 14px 16px;
+  text-align: left;
+  border: none;
+  border-bottom: 1px solid #ededed;
+  line-height: 1.35;
+  box-sizing: border-box;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.history-table__col {
+  display: flex;
+  align-items: center;
+  font-weight: 400;
+  color: #6b6b6b;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.history-table__cell {
+  display: flex;
+  align-items: flex-start;
+  color: #000;
+}
+
+.history-table__col:not(:last-child),
+.history-table__cell:not(:last-child) {
+  border-right: 1px solid #d9d9d9;
+}
+
+.history-table__row {
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.history-table__row:hover {
+  background: #f7f8fc;
+}
+
+.history-table__row--selected {
+  background: #eef2ff;
+}
+
+.history-table__row--selected:hover {
+  background: #eef2ff;
+}

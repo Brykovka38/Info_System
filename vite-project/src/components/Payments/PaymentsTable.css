@@ -1,0 +1,32 @@
+.payment-status {
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  display: inline-block;
+}
+
+.payment-status--оплачено {
+  background: #e6f7ee;
+  color: #1f9254;
+}
+
+.payment-status--частично {
+  background: #fff4e5;
+  color: #d48806;
+}
+
+.payment-status--не\ оплачено {
+  background: #fdecea;
+  color: #cf1322;
+}
+
+.payments-period-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.payments-period-cell__amount {
+  font-size: 13px;
+  color: #6b7280;
+}

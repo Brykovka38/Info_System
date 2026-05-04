@@ -1,0 +1,32 @@
+.payments-toolbar__monthDropdown {
+  position: relative;
+}
+
+.payments-toolbar__monthMenu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 180px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  padding: 8px;
+  z-index: 25;
+}
+
+.payments-toolbar__monthItem {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 10px 14px;
+  border-radius: 12px;
+  text-align: left;
+  font-family: "Merriweather", serif;
+  font-size: 16px;
+  color: #111;
+  cursor: pointer;
+}
+
+.payments-toolbar__monthItem:hover {
+  background: #f2eeff;
+}

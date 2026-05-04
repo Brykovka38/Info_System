@@ -1,0 +1,101 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px 30px;
+  background-color: #ffffff;
+}
+
+.header__left {
+  display: flex;
+  gap: 50px;
+  align-items: flex-start;
+}
+
+.header__logo {
+  width: 200px;
+  height: auto;
+  display: block;
+}
+
+
+.header__profileButton {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #000;
+  transform: translateY(12px);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 40px;
+}
+
+.header__left {
+  display: flex;
+  align-items: center;
+}
+
+.header__logo {
+  height: 70px;
+}
+
+/* 🔥 Контейнер профиля */
+.header__profile {
+  position: relative;
+}
+
+/* Кнопка */
+.header__profileButton {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.header__dropdown {
+  position: absolute;
+  top: 120%;
+  right: 0;
+
+  min-width: 200px;
+  background: white;
+  border-radius: 12px;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  padding: 6px;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+
+  transition: 0.2s ease;
+  z-index: 50;
+}
+
+.header__profile:hover .header__dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.header__dropdownItem {
+  width: 100%;
+  border: none;
+  background: transparent;
+
+  text-align: left;
+  padding: 10px 14px;
+
+  font-family: "Merriweather", serif;
+  font-size: 16px;
+  cursor: pointer;
+
+  border-radius: 8px;
+}
+
+.header__dropdownItem:hover {
+  background: #f3f0ff;
+}

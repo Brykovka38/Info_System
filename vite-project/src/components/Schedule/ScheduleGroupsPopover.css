@@ -1,0 +1,84 @@
+.schedule-popover__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: transparent;
+}
+
+.schedule-popover {
+  position: fixed;
+  z-index: 1000;
+  width: 340px;
+  max-height: 420px;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #ffffff;
+  border: 1px solid #d9defe;
+  box-shadow: 0 16px 40px rgba(54, 60, 110, 0.22);
+  box-sizing: border-box;
+}
+
+.schedule-popover__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 16px 10px;
+  border-bottom: 1px solid #eceffd;
+}
+
+.schedule-popover__title {
+  font-family: "Merriweather", serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #5b4ea2;
+}
+
+.schedule-popover__close {
+  border: none;
+  background: transparent;
+  font-size: 28px;
+  line-height: 1;
+  color: #7d7aa6;
+  cursor: pointer;
+  padding: 0;
+}
+
+.schedule-popover__close:hover {
+  color: #4d4a76;
+}
+
+.schedule-popover__count {
+  padding: 10px 16px 0;
+  font-size: 14px;
+  color: #78779a;
+}
+
+.schedule-popover__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 330px;
+  overflow-y: auto;
+  padding: 14px 16px 16px;
+  box-sizing: border-box;
+}
+
+.schedule-popover__item {
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #f6f7ff;
+  border: 1px solid #e0e4ff;
+}
+
+.schedule-popover__groupName {
+  font-size: 15px;
+  font-weight: 700;
+  color: #3c3c68;
+  margin-bottom: 6px;
+}
+
+.schedule-popover__meta {
+  font-size: 13px;
+  line-height: 1.35;
+  color: #6d6d8b;
+}
