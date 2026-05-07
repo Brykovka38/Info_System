@@ -243,6 +243,7 @@ export const PaymentsPage = ({ user, token }: PaymentsPageProps) => {
         school_name: null,
         teacher_name: null,
         payment_id: null,
+        record_book_id: null,
         payment_date: null,
         payment_method: null,
         status: "не оплачено",
@@ -326,11 +327,10 @@ export const PaymentsPage = ({ user, token }: PaymentsPageProps) => {
     payment_method: "наличные" | "безналичные";
     note: string;
   }) => {
-     if (isParent) {
+    if (isParent) {
       throw new Error("Недостаточно прав");
     }
 
-  const isEdit = Boolean(selectedPayment?.payment_id);
     await fetchWithAuth(`${API_URL}/record-books`, {
       method: "POST",
       headers: {

@@ -1,5 +1,4 @@
 import "./Navbar.css";
-import { useState } from "react";
 
 type AuthUser = {
   id: number;
@@ -36,8 +35,6 @@ export const Navbar = ({
   resetPaymentFilters,
   resetHistoryFilters,
 }: NavbarProps) => {
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
-
   const isStudent = user?.role === "student";
 
   return (
@@ -49,7 +46,6 @@ export const Navbar = ({
         type="button"
         onClick={() => {
           setActiveSection("schedule");
-          setOpenMenu(null);
         }}
       >
         Расписание
@@ -63,7 +59,6 @@ export const Navbar = ({
         onClick={() => {
           setActiveSection("history");
           resetHistoryFilters();
-          setOpenMenu(null);
         }}
       >
         История занятий
@@ -80,7 +75,6 @@ export const Navbar = ({
               onClick={() => {
                 setActiveSection("payments");
                 resetPaymentFilters();
-                setOpenMenu(null);
               }}
             >
               Платежи
@@ -99,7 +93,6 @@ export const Navbar = ({
             onClick={() => {
               setActiveSection("data");
               resetDataFilters();
-              setOpenMenu(null);
             }}
           >
             Данные

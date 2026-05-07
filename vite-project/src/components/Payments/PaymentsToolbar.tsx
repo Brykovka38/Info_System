@@ -1,7 +1,8 @@
 import "./PaymentsToolbar.css";
 import "../style/ToolbarCommon.css";
 import { ChevronDown } from "lucide-react";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 
 const paymentTabs = ["оплата", "выплаты"];
 

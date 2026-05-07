@@ -1,6 +1,7 @@
 import "./ControlsPanel.css";
 import "../style/ToolbarCommon.css";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 
 const periods = ["день", "неделя", "месяц"];
 const filters = ["Без сортировки", "Филиал", "Группа", "Препод."];
@@ -95,7 +96,6 @@ export const ControlsPanel = ({
 }: ControlsPanelProps) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isFilterValuesOpen, setIsFilterValuesOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const filterValuesRef = useRef<HTMLDivElement | null>(null);
   const dateInputRef = useRef<HTMLInputElement | null>(null);
@@ -176,14 +176,16 @@ export const ControlsPanel = ({
   };
 
   const handleOpenDatePicker = () => {
-    if (!dateInputRef.current) return;
+    const input = dateInputRef.current;
 
-    if ("showPicker" in dateInputRef.current) {
-      dateInputRef.current.showPicker();
-    } else {
-      dateInputRef.current.focus();
-      dateInputRef.current.click();
+    if (!input) return;
+    if (typeof input.showPicker === "function") {
+      input.showPicker();
+      return;
     }
+
+    input.focus();
+    input.click();
   };
 
   const weekRange = getWeekRange(selectedDate);

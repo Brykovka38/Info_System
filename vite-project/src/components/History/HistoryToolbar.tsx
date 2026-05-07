@@ -1,5 +1,6 @@
 import "../style/ToolbarCommon.css";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 
 const historyTabs = ["группа", "студент"];
 const groupSortOptions = ["По препод.", "По филиалу", "По времени"];
@@ -56,7 +57,6 @@ export const HistoryToolbar = ({
 }: HistoryToolbarProps) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isFilterValuesOpen, setIsFilterValuesOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const [filterSearchQuery, setFilterSearchQuery] = useState("");
 
   const dropdownRef = useRef<HTMLDivElement | null>(null);
