@@ -17,6 +17,7 @@ type TeacherItem = {
 type StudentItem = {
   id: number;
   full_name: string;
+  course_code?: string | null;
 };
 
 type AddGroupModalProps = {

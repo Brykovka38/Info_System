@@ -41,9 +41,6 @@ export const EditGroupModal = ({
   const [schedule, setSchedule] = useState<ScheduleItem[]>([]);
   const [isSaving, setIsSaving] = useState(false);
   const [selectedStudentId, setSelectedStudentId] = useState("");
-  const [selectedCourseId, setSelectedCourseId] = useState("");
-
-  const groupId = group?.id;
 
   useEffect(() => {
   if (group && isOpen) {

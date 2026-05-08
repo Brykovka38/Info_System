@@ -82,7 +82,6 @@ export const EditStudentModal = ({
   const [relationType, setRelationType] = useState("мать");
 
   const isAdmin = userRole === "admin";
-  const isTeacher = userRole === "teacher";
 
   useEffect(() => {
     if (student && isOpen) {

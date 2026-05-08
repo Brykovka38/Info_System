@@ -35,6 +35,13 @@ type AuthUser = {
   phone?: string;
 };
 
+type TeacherStudentItem = {
+  id: number;
+  full_name: string;
+  status: string;
+  level: string | null;
+};
+
 export const UsersTable = ({ 
   activeRole, 
   selectedId, 
@@ -204,15 +211,15 @@ export const UsersTable = ({
                         }`}
                       >
                         {teacher.students_list.filter(
-                          (s) => s.status === "active" && s.level === "С"
+                          (s: TeacherStudentItem) => s.status === "active" && s.level === "С"
                         ).length > 0 ? (
                           teacher.students_list
                             .filter(
-                              (s) =>
+                              (s: TeacherStudentItem) =>
                                 s.status === "active" &&
                                 s.level === "С"
                             )
-                            .map((student) => (
+                            .map((student: TeacherStudentItem) => (
                               <div
                                 key={student.id}
                                 className="students-tooltip__item"
@@ -249,15 +256,15 @@ export const UsersTable = ({
                         }`}
                       >
                         {teacher.students_list.filter(
-                          (s) => s.status === "active" && s.level === "М"
+                          (s: TeacherStudentItem) => s.status === "active" && s.level === "М"
                         ).length > 0 ? (
                           teacher.students_list
                             .filter(
-                              (s) =>
+                              (s: TeacherStudentItem) =>
                                 s.status === "active" &&
                                 s.level === "М"
                             )
-                            .map((student) => (
+                            .map((student: TeacherStudentItem) => (
                               <div
                                 key={student.id}
                                 className="students-tooltip__item"
@@ -294,7 +301,7 @@ export const UsersTable = ({
                         }`}
                       >
                         {teacher.students_list.length > 0 ? (
-                          teacher.students_list.map((student) => (
+                          teacher.students_list.map((student: TeacherStudentItem) => (
                             <div
                               key={student.id}
                               className={`students-tooltip__item ${

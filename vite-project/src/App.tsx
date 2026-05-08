@@ -39,7 +39,7 @@ function App() {
   const [activeSection, setActiveSection] = useState("schedule");
 
   const [activeRole, setActiveRole] = useState<string | null>(null);
-  const [activeSort, setActiveSort] = useState<string | null>(null);
+  const [, setActiveSort] = useState<string | null>(null);
 
   const isAuthenticated = Boolean(currentUser && token);
 

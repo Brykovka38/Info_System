@@ -69,7 +69,6 @@ export const EditParentModal = ({
   const parentId = parent?.id;
 
   const isAdmin = userRole === "admin";
-  const isTeacher = userRole === "teacher";
 
   useEffect(() => {
     if (parent && isOpen) {

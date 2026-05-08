@@ -72,8 +72,8 @@ export const HistoryPage = ({ user, token }: HistoryPageProps) => {
   const selectedLesson = lessons.find((lesson) => lesson.id === selectedLessonId) || null;
   const selectedStudentEvent = studentHistory.find((item) => item.id === selectedStudentHistoryId) || null;
 
-  const isParent = user?.role === "parent";
-  const isStudent = user?.role === "student";
+  // const isParent = user?.role === "parent";
+  // const isStudent = user?.role === "student";
   const canEditHistory = user?.role === "admin" || user?.role === "teacher";
 
 

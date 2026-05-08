@@ -565,8 +565,8 @@ export const UsersPage = ({ user, token }: UsersPageProps) => {
     status: string;
     class_name: string;
     school_id: number | null;
-    group_id: number | null;
-    course_id: number | null;
+    group_id?: number | null;
+    course_id?: number | null;
   }) => {
     if (!editingStudent) return;
 

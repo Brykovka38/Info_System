@@ -6,17 +6,16 @@ export type GroupScheduleItem = {
 
 export type GroupWithSchedule = {
   id: number;
-  group_name: string;
+  name?: string;
+  group_name?: string;
   schedule_list: GroupScheduleItem[];
 };
 
-// перевод времени в минуты
 export const timeToMinutes = (time: string): number => {
   const [hours, minutes] = time.slice(0, 5).split(":").map(Number);
   return hours * 60 + minutes;
 };
 
-// проверка пересечения времени
 export const isTimeOverlap = (
   startA: string,
   endA: string,
@@ -50,7 +49,8 @@ export const hasScheduleConflict = (
         ) {
           return {
             hasConflict: true,
-            conflictGroup: existingGroup.group_name,
+            conflictGroup:
+              existingGroup.name || existingGroup.group_name || "Без названия",
             day: newSchedule.day_of_week,
             start: newSchedule.start_time,
             end: newSchedule.end_time,
