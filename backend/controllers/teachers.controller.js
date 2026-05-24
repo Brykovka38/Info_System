@@ -303,8 +303,7 @@ const deleteTeacher = async (req, res) => {
       SELECT u.id
       FROM users u
       JOIN teachers t ON t.user_id = u.id
-      WHERE u.id = $1
-        AND u.role = 'teacher'
+      WHERE u.id = $1 AND u.role = 'teacher'
       `,
       [id]
     );
@@ -325,8 +324,24 @@ const deleteTeacher = async (req, res) => {
 
     await client.query(
       `
-      UPDATE users
-      SET status = 'inactive'
+      UPDATE lessons
+      SET teacher_id = NULL
+      WHERE teacher_id = $1
+      `,
+      [id]
+    );
+
+    await client.query(
+      `
+      DELETE FROM teachers
+      WHERE user_id = $1
+      `,
+      [id]
+    );
+
+    await client.query(
+      `
+      DELETE FROM users
       WHERE id = $1 AND role = 'teacher'
       `,
       [id]
@@ -334,11 +349,11 @@ const deleteTeacher = async (req, res) => {
 
     await client.query("COMMIT");
 
-    res.json({ message: "Преподаватель деактивирован" });
+    res.json({ message: "Преподаватель удалён" });
   } catch (error) {
     await client.query("ROLLBACK");
 
-    console.error("Ошибка деактивации преподавателя:", {
+    console.error("Ошибка удаления преподавателя:", {
       message: error.message,
       code: error.code,
       detail: error.detail,
