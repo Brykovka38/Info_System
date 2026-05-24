@@ -64,37 +64,38 @@ export const ChangeTemporaryPasswordModal = ({
     }
 
     try {
-  setIsSaving(true);
+      setIsSaving(true);
 
-  const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token");
 
-  const response = await fetch(
-    `${API_URL}/users/${user.id}/change-temporary-password`,
-    {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        current_password: form.currentPassword,
-        new_password: form.newPassword,
-      }),
-    }
-  );
+      const response = await fetch(
+        `${API_URL}/users/${user.id}/change-temporary-password`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            current_password: form.currentPassword,
+            new_password: form.newPassword,
+          }),
+        }
+      );
 
-  const data = await response.json().catch(() => ({}));
+      const data = await response.json().catch(() => ({}));
 
-  if (!response.ok) {
-    throw new Error(data.error || "Не удалось изменить пароль");
-  }
+      if (!response.ok) {
+        throw new Error(data.error || "Не удалось изменить пароль");
+      }
 
-  onSuccess(data.user);
+      onSuccess(data.user);
     } catch (error: any) {
       setErrorMessage(error.message || "Не удалось изменить пароль");
     } finally {
       setIsSaving(false);
     }
+  };
 
   return (
     <div className="modal-backdrop">
