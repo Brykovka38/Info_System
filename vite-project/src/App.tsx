@@ -70,7 +70,11 @@ function App() {
 
   return (
     <>
-      <Header setActiveSection={setActiveSection} onLogout={handleLogout} />
+      <Header
+        setActiveSection={setActiveSection}
+        onLogout={handleLogout}
+        isLoginPage={!isAuthenticated}
+      />
 
       {!isAuthenticated ? (
         <LoginPage onLogin={handleLogin} />

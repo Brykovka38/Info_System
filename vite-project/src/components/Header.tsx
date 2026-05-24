@@ -5,42 +5,49 @@ import { CircleUserRound } from "lucide-react";
 type HeaderProps = {
   setActiveSection: (section: string) => void;
   onLogout: () => void;
+  isLoginPage?: boolean;
 };
 
-export const Header = ({ setActiveSection, onLogout }: HeaderProps) => {
+export const Header = ({
+  setActiveSection,
+  onLogout,
+  isLoginPage = false,
+}: HeaderProps) => {
   return (
     <header className="header">
       <div className="header__left">
         <img className="header__logo" src={naitLogo} alt="Логотип НАИТ" />
       </div>
 
-      <div className="header__profile">
-        <button
-          className="header__profileButton"
-          type="button"
-          aria-label="Профиль"
-        >
-          <CircleUserRound size={44} />
-        </button>
-
-        <div className="header__dropdown">
+      {!isLoginPage && (
+        <div className="header__profile">
           <button
-            className="header__dropdownItem"
+            className="header__profileButton"
             type="button"
-            onClick={() => setActiveSection("profile")}
+            aria-label="Профиль"
           >
-            Информация о себе
+            <CircleUserRound size={44} />
           </button>
 
-          <button
-            className="header__dropdownItem"
-            type="button"
-            onClick={onLogout}
-          >
-            Выход
-          </button>
+          <div className="header__dropdown">
+            <button
+              className="header__dropdownItem"
+              type="button"
+              onClick={() => setActiveSection("profile")}
+            >
+              Информация о себе
+            </button>
+
+            <button
+              className="header__dropdownItem"
+              type="button"
+              onClick={onLogout}
+            >
+              Выход
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </header>
   );
 };

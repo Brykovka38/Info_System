@@ -125,6 +125,13 @@ const formatMinutesToTime = (minutes: number) => {
   return `${h}:${m}`;
 };
 
+const getDayShortByDate = (dateString: string) => {
+  const date = new Date(dateString);
+  const dayIndex = date.getDay() === 0 ? 6 : date.getDay() - 1;
+
+  return weekDaysShort[dayIndex];
+};
+
 const getMonday = (dateString: string) => {
   const date = new Date(dateString);
   const day = date.getDay();
@@ -421,6 +428,7 @@ export const ScheduleGrid = ({
 
   if (isMonthView) {
     const monthCells = getMonthMatrix(selectedDate);
+    const monthEvents = createRawEvents(groups);
 
     return (
       <section className="schedule schedule--month">
@@ -443,6 +451,35 @@ export const ScheduleGrid = ({
               const isWeekend = index % 7 === 5 || index % 7 === 6;
               const isSelected = cell.fullDate === selectedDate;
 
+              const cellEvents = cell.fullDate
+                ? monthEvents
+                    .filter(
+                      (event) =>
+                        event.dayShort === getDayShortByDate(cell.fullDate!)
+                    )
+                    .sort((a, b) => {
+                      if (a.startMinutes !== b.startMinutes) {
+                        return a.startMinutes - b.startMinutes;
+                      }
+
+                      if (a.endMinutes !== b.endMinutes) {
+                        return a.endMinutes - b.endMinutes;
+                      }
+
+                      return a.group_name.localeCompare(b.group_name);
+                    })
+                : [];
+
+              const firstStartMinutes =
+                cellEvents.length > 0
+                  ? Math.min(...cellEvents.map((event) => event.startMinutes))
+                  : null;
+
+              const lastEndMinutes =
+                cellEvents.length > 0
+                  ? Math.max(...cellEvents.map((event) => event.endMinutes))
+                  : null;
+
               return (
                 <div
                   key={`${cell.fullDate ?? "empty"}-${index}`}
@@ -453,7 +490,49 @@ export const ScheduleGrid = ({
                   }`}
                 >
                   {cell.day && (
-                    <div className="schedule-month__dateNumber">{cell.day}</div>
+                    <>
+                      <div className="schedule-month__dateNumber">
+                        {cell.day}
+                      </div>
+
+                      {cellEvents.length > 0 && cell.fullDate && (
+                        <button
+                          type="button"
+                          className="schedule-month__aggregate"
+                          onClick={(event) => {
+                            onAggregateClick(
+                              cellEvents.map((group) => ({
+                                id: group.id,
+                                group_name: group.group_name,
+                                teacher_name: group.teacher_name,
+                                school_name: group.school_name,
+                                cabinet: group.cabinet,
+                                start_time: group.start_time,
+                                end_time: group.end_time,
+                              })),
+                              event.currentTarget.getBoundingClientRect(),
+                              cell.fullDate!
+                            );
+                          }}
+                        >
+                          <div className="schedule-month__aggregateTitle">
+                            Группы
+                          </div>
+
+                          <div className="schedule-month__aggregateText">
+                            {cellEvents.length} группы
+                          </div>
+
+                          {firstStartMinutes !== null &&
+                            lastEndMinutes !== null && (
+                              <div className="schedule-month__aggregateText">
+                                {formatMinutesToTime(firstStartMinutes)} —{" "}
+                                {formatMinutesToTime(lastEndMinutes)}
+                              </div>
+                            )}
+                        </button>
+                      )}
+                    </>
                   )}
                 </div>
               );

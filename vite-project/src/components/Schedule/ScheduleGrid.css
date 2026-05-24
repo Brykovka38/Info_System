@@ -214,3 +214,44 @@
 .schedule__eventCard--aggregate:hover {
   filter: brightness(1.03);
 }
+
+.schedule-month__aggregate {
+  width: 100%;
+  margin-top: 8px;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #b146f0 0%, #5bb9df 100%);
+  color: #ffffff;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  box-sizing: border-box;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(120, 110, 220, 0.2);
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.schedule-month__aggregate:hover {
+  filter: brightness(1.04);
+  transform: translateY(-1px);
+}
+
+.schedule-month__aggregate:active {
+  transform: translateY(0);
+}
+
+.schedule-month__aggregateTitle {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 4px;
+  color: #ffffff;
+}
+
+.schedule-month__aggregateText {
+  font-size: 12px;
+  line-height: 1.25;
+  color: #ffffff;
+  word-break: break-word;
+}

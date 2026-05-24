@@ -148,7 +148,7 @@ export const UsersTable = ({
             <th>№</th>
             <th>ФИО преподавателя</th>
             {user?.role !== "parent" && user?.role !== "student" && (
-              <><th>Состояние</th> </>
+              <th>Состояние</th>
             )}
             <th>Номер телефона</th>
             <th>Группа</th>
@@ -186,7 +186,7 @@ export const UsersTable = ({
                 </div>
               </td>
               {user?.role !== "parent" && user?.role !== "student" && (
-                <><td>{teacher.status === "active" ? "Активный" : "Неактивный"}</td> </>
+                <td>{teacher.status === "active" ? "Активный" : "Неактивный"}</td>
               )}
               <td>{teacher.phone || "—"}</td>
               <td className="users-table__groups">{teacher.group_names || "—"}</td>
