@@ -287,25 +287,70 @@ const deleteTeacher = async (req, res) => {
     return res.status(403).json({ error: "Недостаточно прав" });
   }
 
-  const id = req.params.id;
+  const id = Number(req.params.id);
+
+  if (!Number.isInteger(id)) {
+    return res.status(400).json({ error: "Некорректный id преподавателя" });
+  }
+
+  const client = await pool.connect();
 
   try {
-    await pool.query(
+    await client.query("BEGIN");
+
+    const teacherResult = await client.query(
       `
-      UPDATE groups 
-      SET teacher_id = NULL 
+      SELECT u.id
+      FROM users u
+      JOIN teachers t ON t.user_id = u.id
+      WHERE u.id = $1 AND u.role = 'teacher'
+      `,
+      [id]
+    );
+
+    if (teacherResult.rows.length === 0) {
+      await client.query("ROLLBACK");
+      return res.status(404).json({ error: "Преподаватель не найден" });
+    }
+
+    await client.query(
+      `
+      UPDATE groups
+      SET teacher_id = NULL
       WHERE teacher_id = $1
       `,
       [id]
     );
 
-    await pool.query("DELETE FROM teachers WHERE user_id = $1", [id]);
-    await pool.query("DELETE FROM users WHERE id = $1", [id]);
+    await client.query(
+      `
+      DELETE FROM teachers
+      WHERE user_id = $1
+      `,
+      [id]
+    );
+
+    await client.query(
+      `
+      UPDATE users
+      SET status = 'inactive'
+      WHERE id = $1 AND role = 'teacher'
+      `,
+      [id]
+    );
+
+    await client.query("COMMIT");
 
     res.json({ message: "Преподаватель удалён" });
   } catch (error) {
+    await client.query("ROLLBACK");
     console.error("Ошибка удаления преподавателя:", error);
-    res.status(500).json({ error: "Ошибка сервера" });
+    res.status(500).json({
+      error: "Ошибка сервера",
+      details: process.env.NODE_ENV === "development" ? error.message : undefined,
+    });
+  } finally {
+    client.release();
   }
 };
 
