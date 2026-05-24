@@ -303,7 +303,8 @@ const deleteTeacher = async (req, res) => {
       SELECT u.id
       FROM users u
       JOIN teachers t ON t.user_id = u.id
-      WHERE u.id = $1 AND u.role = 'teacher'
+      WHERE u.id = $1
+        AND u.role = 'teacher'
       `,
       [id]
     );
@@ -324,14 +325,6 @@ const deleteTeacher = async (req, res) => {
 
     await client.query(
       `
-      DELETE FROM teachers
-      WHERE user_id = $1
-      `,
-      [id]
-    );
-
-    await client.query(
-      `
       UPDATE users
       SET status = 'inactive'
       WHERE id = $1 AND role = 'teacher'
@@ -341,13 +334,26 @@ const deleteTeacher = async (req, res) => {
 
     await client.query("COMMIT");
 
-    res.json({ message: "Преподаватель удалён" });
+    res.json({ message: "Преподаватель деактивирован" });
   } catch (error) {
     await client.query("ROLLBACK");
-    console.error("Ошибка удаления преподавателя:", error);
+
+    console.error("Ошибка деактивации преподавателя:", {
+      message: error.message,
+      code: error.code,
+      detail: error.detail,
+      constraint: error.constraint,
+      table: error.table,
+      column: error.column,
+    });
+
     res.status(500).json({
       error: "Ошибка сервера",
-      details: process.env.NODE_ENV === "development" ? error.message : undefined,
+      details: error.message,
+      code: error.code,
+      constraint: error.constraint,
+      table: error.table,
+      column: error.column,
     });
   } finally {
     client.release();
