@@ -4,7 +4,7 @@ import { ChevronDown } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 
-const paymentTabs = ["оплата", "выплаты"];
+const paymentTabs = ["оплата"];
 
 const sortOptions = [
   "По студенту",
