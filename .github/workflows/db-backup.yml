@@ -3,7 +3,7 @@ name: Database backup
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 3 * * *"
+    - cron: "0 22 * * *"
 
 jobs:
   backup:
@@ -63,3 +63,13 @@ jobs:
         run: |
           latest_backup=$(ls -t backups/*.dump | head -n 1)
           node upload-backup-to-b2.js "$latest_backup"
+      
+      - name: Delete backups older than 14 days
+        env:
+          B2_KEY_ID: ${{ secrets.B2_KEY_ID }}
+          B2_APPLICATION_KEY: ${{ secrets.B2_APPLICATION_KEY }}
+          B2_BUCKET_NAME: ${{ secrets.B2_BUCKET_NAME }}
+          B2_ENDPOINT: ${{ secrets.B2_ENDPOINT }}
+          B2_REGION: ${{ secrets.B2_REGION }}
+        run: |
+          node cleanup-old-backups-b2.js
