@@ -26,7 +26,7 @@ jobs:
           echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt noble-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
           sudo apt-get update
           sudo apt-get install -y postgresql-client-17
-          pg_dump --version
+          /usr/lib/postgresql/17/bin/pg_dump --version
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -49,7 +49,9 @@ jobs:
             exit 1
           fi
 
-          pg_dump "$DATABASE_URL" -F c -f "backups/backup_$(date +'%Y-%m-%d_%H-%M-%S').dump"
+          CLEAN_DATABASE_URL=$(printf "%s" "$DATABASE_URL" | tr -d '\r\n')
+
+          /usr/lib/postgresql/17/bin/pg_dump "$CLEAN_DATABASE_URL" -F c -f "backups/backup_$(date +'%Y-%m-%d_%H-%M-%S').dump"
 
       - name: Upload backup to Backblaze B2
         env:
