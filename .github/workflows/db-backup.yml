@@ -33,19 +33,25 @@ jobs:
         run: npm ci
 
       - name: Create backup
-        run: |
-          mkdir -p backups
-          pg_dump "$DATABASE_URL" -F c -f "backups/backup_$(date +'%Y-%m-%d_%H-%M-%S').dump"
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          mkdir -p backups
+
+          if [ -z "$DATABASE_URL" ]; then
+            echo "DATABASE_URL is empty"
+            exit 1
+          fi
+
+          pg_dump "$DATABASE_URL" -F c -f "backups/backup_$(date +'%Y-%m-%d_%H-%M-%S').dump"
 
       - name: Upload backup to Backblaze B2
-        run: |
-          latest_backup=$(ls -t backups/*.dump | head -n 1)
-          node upload-backup-to-b2.js "$latest_backup"
         env:
           B2_KEY_ID: ${{ secrets.B2_KEY_ID }}
           B2_APPLICATION_KEY: ${{ secrets.B2_APPLICATION_KEY }}
           B2_BUCKET_NAME: ${{ secrets.B2_BUCKET_NAME }}
           B2_ENDPOINT: ${{ secrets.B2_ENDPOINT }}
           B2_REGION: ${{ secrets.B2_REGION }}
+        run: |
+          latest_backup=$(ls -t backups/*.dump | head -n 1)
+          node upload-backup-to-b2.js "$latest_backup"
